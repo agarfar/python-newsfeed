@@ -11,6 +11,15 @@ engine = create_engine(getenv('DB_URL'), echo=True, pool_size=20, max_overflow=0
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
+def init_db():
+  Base.metadata.create_all(engine)
+
+def get_db():
+  return Session()
+
+# Whenever this function is called, it returns a new session-connection object. Other modules in the app can import Session directly from the db package,
+# but using a function means that we can perform additional logic before creating the database connection.
+
 # Note that the getenv() function is part of Python's built-in os module. But because we used a .env file to fake the environment variable, we need to first call load_dotenv() from the python-dotenv module. In production, DB_URL will be a proper environment variable.
 
 # We also use several imported functions from sqlalchemy to create the following three important variables:
