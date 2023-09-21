@@ -17,6 +17,7 @@ def create_app(test_config=None):
   app.register_blueprint(home)
   app.register_blueprint(dashboard)
 
-  init_db()
+  init_db(app)
+  # Thanks to these updates, we no longer have to worry about connections remaining open and potentially locking up the server. added 'app' to init_db() call
 
   return app
